@@ -11,11 +11,9 @@ import {
   Braces,
   Check,
   ChevronRight,
-  Code2,
   Database,
   Download,
   ExternalLink,
-  Layers3,
   Linkedin,
   Mail,
   Menu,
@@ -119,12 +117,10 @@ const projects = [
 ] as const;
 
 const learning = [
-  { name: 'Java', icon: Braces, intensity: 'high', description: { pt: 'Linguagem principal de estudo e foco profissional atual', en: 'Main study language and current professional focus' } },
-  { name: 'SQL', icon: Database, intensity: 'high', description: { pt: 'Banco de dados relacionais e consultas', en: 'Relational databases and queries' } },
-  { name: 'JDBC', icon: Workflow, intensity: 'medium', description: { pt: 'Conexão Java com bancos de dados', en: 'Java database connectivity' } },
-  { name: 'Spring Boot', icon: Terminal, intensity: 'medium', description: { pt: 'Framework para aplicações Java', en: 'Framework for Java applications' } },
-  { name: { pt: 'Algoritmos', en: 'Algorithms' }, icon: Layers3, intensity: 'medium', description: { pt: 'Construção e análise de algoritmos', en: 'Algorithm design and analysis' } },
-  { name: { pt: 'Estruturas de Dados', en: 'Data Structures' }, icon: Code2, intensity: 'medium', description: { pt: 'Estruturas de dados fundamentais e suas aplicações', en: 'Fundamental data structures and their applications' } },
+  { name: 'Java', icon: Braces, description: { pt: 'Linguagem principal de estudo e foco profissional atual', en: 'Main study language and current professional focus' } },
+  { name: 'SQL', icon: Database, description: { pt: 'Banco de dados relacionais e consultas', en: 'Relational databases and queries' } },
+  { name: 'JDBC', icon: Workflow, description: { pt: 'Conexão Java com bancos de dados', en: 'Java database connectivity' } },
+  { name: 'Spring Boot', icon: Terminal, description: { pt: 'Framework para aplicações Java', en: 'Framework for Java applications' } },
 ] as const;
 
 function text(value: MaybeLocalized, lang: Language) {
@@ -210,28 +206,64 @@ function Shell({
   );
 }
 
+function CursorFollower() {
+  useEffect(() => {
+    const canUseCustomCursor = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canUseCustomCursor) return;
+
+    const cursor = document.querySelector<HTMLElement>('.cursor-follower');
+    if (!cursor) return;
+
+    document.body.classList.add('has-custom-cursor');
+    let frame = 0;
+    let x = window.innerWidth / 2;
+    let y = window.innerHeight / 2;
+
+    const paint = () => {
+      cursor.style.setProperty('--cursor-x', `${x}px`);
+      cursor.style.setProperty('--cursor-y', `${y}px`);
+      frame = 0;
+    };
+    const move = (event: PointerEvent) => {
+      x = event.clientX;
+      y = event.clientY;
+      if (!frame) frame = window.requestAnimationFrame(paint);
+    };
+    const activate = (event: Event) => {
+      const target = event.target;
+      if (target instanceof Element && target.closest('a, button, [role="button"]')) {
+        cursor.classList.add('is-active');
+      }
+    };
+    const deactivate = () => cursor.classList.remove('is-active');
+
+    window.addEventListener('pointermove', move);
+    document.addEventListener('pointerover', activate);
+    document.addEventListener('pointerout', deactivate);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerover', activate);
+      document.removeEventListener('pointerout', deactivate);
+      document.body.classList.remove('has-custom-cursor');
+    };
+  }, []);
+
+  return <span className="cursor-follower" aria-hidden="true"><span className="cursor-dot" /></span>;
+}
+
 function HomePage({ lang }: { lang: Language }) {
   return (
     <main className="page-frame home-page" id="main">
       <section className="home-copy">
-        <div className="home-kicker animate-rise"><span className="kicker-mark" /><span className="eyebrow">{lang === 'pt' ? 'Portfólio pessoal · Fortaleza, BR' : 'Personal portfolio · Fortaleza, BR'}</span></div>
-        <h1 className="display-title home-title animate-rise delay-1">Vinícius<br /><em>Bevilaqua.</em></h1>
-        <p className="body-copy home-intro animate-rise delay-2">{lang === 'pt' ? 'Estudante de Ciência da Computação e desenvolvedor Java em formação. Gosto de entender como as coisas funcionam — e de transformar essa curiosidade em software.' : 'Computer Science student and Java developer in progress. I like understanding how things work — and turning that curiosity into software.'}</p>
-        <div className="home-cta-row animate-rise delay-3">
+        <h1 className="display-title home-title animate-rise">Vinícius<br /><em>Bevilaqua.</em></h1>
+        <p className="body-copy home-intro animate-rise delay-1">{lang === 'pt' ? 'Estudante de Ciência da Computação e desenvolvedor Java em formação. Gosto de entender como as coisas funcionam — e de transformar essa curiosidade em software.' : 'Computer Science student and Java developer in progress. I like understanding how things work — and turning that curiosity into software.'}</p>
+        <div className="home-cta-row animate-rise delay-2">
           <Link href="/projects" className="button-primary" data-testid="link-home-projects">{lang === 'pt' ? 'Explorar projetos' : 'Explore projects'} <ArrowUpRight size={15} /></Link>
           <Link href="/about" className="button-quiet" data-testid="link-home-about">{lang === 'pt' ? 'Conhecer o caminho' : 'See the journey'} <ArrowDownRight size={15} /></Link>
         </div>
-        <div className="home-meta animate-rise delay-4"><span className="status-dot" /><span>{lang === 'pt' ? 'Construindo, estudando, iterando' : 'Building, studying, iterating'}</span></div>
       </section>
-      <aside className="home-art animate-rise delay-2" aria-label="VB graphic">
-        <div className="art-grid" />
-        <div className="art-orbit" />
-        <div className="art-card">
-          <span className="art-initials">VB</span>
-          <div className="art-caption"><span>JAVA / WEB</span><span>001—026</span></div>
-        </div>
-        <span className="side-note">A SMALL DIGITAL STUDIO</span>
-      </aside>
     </main>
   );
 }
@@ -349,11 +381,18 @@ function LearningPage({ lang }: { lang: Language }) {
           {learning.map((item, index) => {
             const Icon = item.icon;
             const itemName = text(item.name, lang);
-            return <article className={`learning-card animate-rise delay-${(index % 4) + 1}`} key={itemName} data-testid={`card-learning-${itemName.toLowerCase().replaceAll(' ', '-')}`}>
-              <div className="learning-icon"><Icon size={20} /></div>
-              <div className="intensity" aria-label={`${item.intensity} intensity`}>{[1, 2, 3].map((bar) => <i className={item.intensity === 'high' || bar < 3 ? 'active' : ''} key={bar} />)}</div>
-              <h2 className="learning-name">{itemName}</h2>
-              <p className="learning-description">{text(item.description, lang)}</p>
+             return <article className={`learning-card animate-rise delay-${(index % 4) + 1}`} key={itemName} data-testid={`card-learning-${itemName.toLowerCase().replaceAll(' ', '-')}`}>
+               <div className="learning-circle">
+                 <span className="learning-index">{String.fromCharCode(65 + index)}</span>
+                 <div className="learning-copy">
+                   <div className="learning-icon"><Icon size={17} /></div>
+                   <div>
+                     <h2 className="learning-name">{itemName}</h2>
+                     <p className="learning-description">{text(item.description, lang)}</p>
+                   </div>
+                 </div>
+                 <span className="learning-arrow" aria-hidden="true">↗</span>
+               </div>
             </article>;
           })}
         </section>
@@ -428,6 +467,7 @@ function App() {
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
           <Router />
         </WouterRouter>
+        <CursorFollower />
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
