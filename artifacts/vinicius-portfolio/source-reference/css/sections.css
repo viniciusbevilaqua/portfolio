@@ -1,0 +1,192 @@
+/**
+ * Sections — hero, about, projects, learning, cv, contact, footer
+ */
+
+/* ── Hero ───────────────────────────────────────────── */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-block: calc(var(--nav-height) + var(--space-8)) var(--space-16);
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-content {
+  position: relative;
+  z-index: var(--z-base);
+  text-align: center;
+  max-width: 48rem;
+  padding-inline: var(--container-padding);
+}
+
+.hero-photo {
+  margin-bottom: var(--space-8);
+}
+
+.hero-photo-img {
+  width: 8rem;
+  height: 8rem;
+  margin-inline: auto;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  border: 3px solid var(--accent-primary);
+  box-shadow: var(--shadow-glow);
+}
+
+.hero-title {
+  font-size: var(--text-5xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-6);
+}
+
+.hero-title-line {
+  display: block;
+}
+
+.hero-title-line:nth-child(2) {
+  background: linear-gradient(135deg, var(--text-heading), var(--accent-primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: clamp(var(--text-lg), 2.5vw, var(--text-xl));
+  color: var(--text-secondary);
+  margin-bottom: var(--space-8);
+}
+
+.hero-building {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-3) var(--space-5);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+}
+
+.building-text {
+  color: var(--accent-primary);
+}
+
+.typing-cursor {
+  color: var(--accent-primary);
+  animation: blink 1s step-end infinite;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-base);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 3rem;
+  background: linear-gradient(to bottom, var(--accent-primary), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+/* ── About ──────────────────────────────────────────── */
+.about-section {
+  background: var(--bg-secondary);
+}
+
+/* ── Projects ───────────────────────────────────────── */
+.projects-section {
+  background: var(--bg-primary);
+}
+
+/* ── Learning ───────────────────────────────────────── */
+.learning-section {
+  background: var(--bg-secondary);
+  text-align: center;
+}
+
+.learning-section .section-title {
+  margin-inline: auto;
+}
+
+.learning-section .section-title::after {
+  margin-inline: auto;
+}
+
+/* ── CV ─────────────────────────────────────────────── */
+.cv-section {
+  background: var(--bg-primary);
+}
+
+/* ── Contact ────────────────────────────────────────── */
+.contact-section {
+  padding-block: var(--section-padding);
+  background: linear-gradient(
+    180deg,
+    var(--bg-secondary) 0%,
+    var(--bg-primary) 100%
+  );
+}
+
+.contact-wrapper {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.contact-content {
+  text-align: center;
+}
+
+.contact-title {
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-4xl));
+  margin-bottom: var(--space-4);
+  background: linear-gradient(135deg, var(--text-heading), var(--accent-primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.contact-subtitle {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-12);
+}
+
+/* ── Footer ─────────────────────────────────────────── */
+.footer {
+  padding-block: var(--space-8);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-primary);
+}
+
+.footer-signature {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.footer-name {
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+}
+
+.footer-year {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}

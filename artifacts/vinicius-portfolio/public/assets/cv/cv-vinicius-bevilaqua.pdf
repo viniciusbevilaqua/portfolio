@@ -1,0 +1,94 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792]
+   /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1800 >>
+stream
+BT
+/F2 22 Tf
+50 740 Td
+(Vinicius Bevilaqua) Tj
+/F1 12 Tf
+0 -28 Td
+(Computer Science Student / Java Developer) Tj
+0 -20 Td
+(vinicius257500@gmail.com  |  \(85\) 98558-7004) Tj
+0 -20 Td
+(linkedin.com/in/vinicius-bevilaqua  |  github.com/viniciusbevilaqua) Tj
+0 -40 Td
+/F2 14 Tf
+(Education) Tj
+/F1 11 Tf
+0 -18 Td
+(Universidade de Fortaleza - UNIFOR) Tj
+0 -16 Td
+(Bachelor in Computer Science  |  2025 - 2028  |  4th Semester) Tj
+0 -16 Td
+(Additional: Rocketseat - Web Programming Fundamentals) Tj
+0 -36 Td
+/F2 14 Tf
+(Technologies) Tj
+/F1 11 Tf
+0 -18 Td
+(Java, JavaScript, HTML, CSS, React Native, Expo, Node.js,) Tj
+0 -16 Td
+(Firebase, Git, GitHub, IntelliJ IDEA, VS Code, SQL, JDBC) Tj
+0 -36 Td
+/F2 14 Tf
+(Projects) Tj
+/F1 11 Tf
+0 -18 Td
+(Accessibility App - Mobile app for urban accessibility evaluation.) Tj
+0 -16 Td
+(Tech: React Native, Expo, Firebase. Login, Ranking, Settings.) Tj
+0 -22 Td
+(Academic Mobility System - Web system for exchange applications.) Tj
+0 -16 Td
+(Tech: HTML, CSS, JavaScript, LocalStorage.) Tj
+0 -22 Td
+(DevLinks - Personal profile and social links page.) Tj
+0 -16 Td
+(Tech: HTML, CSS, JavaScript.) Tj
+0 -36 Td
+/F2 14 Tf
+(Currently Learning) Tj
+/F1 11 Tf
+0 -18 Td
+(Java, SQL, JDBC, Spring Boot, Algorithms, Data Structures) Tj
+0 -36 Td
+/F2 14 Tf
+(Languages) Tj
+/F1 11 Tf
+0 -18 Td
+(Portuguese \(Native\)  |  English \(Intermediate\)) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000266 00000 n 
+0000002118 00000 n 
+0000002195 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+2277
+%%EOF

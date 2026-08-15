@@ -1,0 +1,153 @@
+/**
+ * Animations — keyframes & scroll reveal
+ */
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes scrollPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scaleY(0.6);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+@keyframes discSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes heroGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* Scroll reveal states */
+[data-animate] {
+  opacity: 0;
+  transition: opacity var(--duration-slower) var(--ease-out),
+              transform var(--duration-slower) var(--ease-out);
+}
+
+[data-animate="fade-up"] {
+  transform: translateY(30px);
+}
+
+[data-animate="fade-in"] {
+  transform: none;
+}
+
+[data-animate="scale-in"] {
+  transform: scale(0.92);
+}
+
+[data-animate="slide-left"] {
+  transform: translateX(-30px);
+}
+
+[data-animate].animated {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger children */
+[data-animate-child] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--duration-slower) var(--ease-out),
+              transform var(--duration-slower) var(--ease-out);
+}
+
+[data-animate].animated [data-animate-child="1"] {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.1s;
+}
+
+[data-animate].animated [data-animate-child="2"] {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.25s;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate],
+  [data-animate-child] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .typing-cursor,
+  .scroll-line,
+  .disc-ring {
+    animation: none !important;
+  }
+}
+
+/* Konami / easter egg effects */
+body.konami-mode {
+  animation: konamiHue 3s linear infinite;
+}
+
+@keyframes konamiHue {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+body.logo-spin .nav-logo {
+  animation: logoSpin 0.6s var(--ease-out);
+}
+
+@keyframes logoSpin {
+  from { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  to { transform: rotate(360deg) scale(1); }
+}

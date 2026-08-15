@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Vinícius Bevilaqua Portfolio"
+description = "A personal portfolio for Vinícius Bevilaqua, presenting his profile, projects, learning journey, and resume through focused, navigable screens with interactive project details."
+version = "1.0.0"
+id = "artifacts/vinicius-portfolio"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21641
+
+[services.development]
+run = "pnpm --filter @workspace/vinicius-portfolio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vinicius-portfolio", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/vinicius-portfolio/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21641"
+BASE_PATH = "/"
