@@ -35,7 +35,7 @@ const DATA = {
     phone: "(85) 98558-7004",
     phoneFull: "+5585985587004",
     linkedin: {
-      url: "https://www.linkedin.com/in/vinicius-bevil%C3%A1qua-9a52522b0",
+      url: "https://www.linkedin.com/in/vinicius-bevilaqua-9a52522b0/",
       label: "LinkedIn"
     },
     github: {

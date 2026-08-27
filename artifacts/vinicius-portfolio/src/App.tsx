@@ -46,7 +46,7 @@ const personal = {
   email: 'vinicius257500@gmail.com',
   phone: '(85) 98558-7004',
   phoneFull: '+5585985587004',
-  linkedin: 'https://www.linkedin.com/in/vinicius-bevil%C3%A1qua-9a52522b0',
+  linkedin: 'https://www.linkedin.com/in/vinicius-bevilaqua-9a52522b0/',
   github: 'https://github.com/viniciusbevilaqua',
   cv: '/assets/cv/cv-vinicius-bevilaqua.pdf',
 };
@@ -160,6 +160,7 @@ function Shell({
 
   return (
     <div className="portfolio-shell">
+      <AmbientBackground />
       <header className="site-nav">
         <div className="nav-wrap">
           <Link href="/" className="brand-mark" aria-label="Vinícius Bevilaqua — Home" data-testid="link-brand">
@@ -193,7 +194,9 @@ function Shell({
           ))}
         </div>
       </header>
-      {children}
+      <div className="route-transition" key={location}>
+        {children}
+      </div>
       <footer className="site-footer">
         <span>© {new Date().getFullYear()} Vinícius Bevilaqua</span>
         <div className="footer-links">
@@ -202,6 +205,48 @@ function Shell({
           <a href={`mailto:${personal.email}`} data-testid="link-footer-email">Email</a>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function AmbientBackground() {
+  useEffect(() => {
+    const supportsPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!supportsPointer || reducedMotion) return;
+
+    let frame = 0;
+    let pointerX = .5;
+    let pointerY = .5;
+    const paint = () => {
+      document.documentElement.style.setProperty('--ambient-x', `${pointerX * 100}%`);
+      document.documentElement.style.setProperty('--ambient-y', `${pointerY * 100}%`);
+      document.documentElement.style.setProperty('--blob-shift-x', `${(pointerX - .5) * 46}px`);
+      document.documentElement.style.setProperty('--blob-shift-y', `${(pointerY - .5) * 38}px`);
+      document.documentElement.style.setProperty('--blob-shift-x-reverse', `${(pointerX - .5) * -32}px`);
+      document.documentElement.style.setProperty('--blob-shift-y-reverse', `${(pointerY - .5) * -27}px`);
+      document.documentElement.style.setProperty('--blob-shift-y-up', `${(pointerY - .5) * -23}px`);
+      document.documentElement.style.setProperty('--blob-shift-x-soft-reverse', `${(pointerX - .5) * -28}px`);
+      frame = 0;
+    };
+    const move = (event: PointerEvent) => {
+      pointerX = event.clientX / window.innerWidth;
+      pointerY = event.clientY / window.innerHeight;
+      if (!frame) frame = window.requestAnimationFrame(paint);
+    };
+    window.addEventListener('pointermove', move, { passive: true });
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('pointermove', move);
+    };
+  }, []);
+
+  return (
+    <div className="ambient-background" aria-hidden="true">
+      <span className="ambient-blob blob-one" />
+      <span className="ambient-blob blob-two" />
+      <span className="ambient-blob blob-three" />
+      <span className="ambient-glow" />
     </div>
   );
 }
@@ -229,13 +274,21 @@ function CursorFollower() {
       y = event.clientY;
       if (!frame) frame = window.requestAnimationFrame(paint);
     };
+    const interactiveTarget = (target: EventTarget | null) => (
+      target instanceof Element ? target.closest('a, button, [role="button"]') : null
+    );
     const activate = (event: Event) => {
-      const target = event.target;
-      if (target instanceof Element && target.closest('a, button, [role="button"]')) {
+      const target = interactiveTarget(event.target);
+      const previous = interactiveTarget((event as PointerEvent).relatedTarget);
+      if (target && target !== previous) {
         cursor.classList.add('is-active');
       }
     };
-    const deactivate = () => cursor.classList.remove('is-active');
+    const deactivate = (event: Event) => {
+      const target = interactiveTarget(event.target);
+      const next = interactiveTarget((event as PointerEvent).relatedTarget);
+      if (target && target !== next) cursor.classList.remove('is-active');
+    };
 
     window.addEventListener('pointermove', move);
     document.addEventListener('pointerover', activate);
@@ -257,9 +310,14 @@ function HomePage({ lang }: { lang: Language }) {
   return (
     <main className="page-frame home-page" id="main">
       <section className="home-copy">
-        <h1 className="display-title home-title animate-rise">Vinícius<br /><em>Bevilaqua.</em></h1>
-        <p className="body-copy home-intro animate-rise delay-1">{lang === 'pt' ? 'Estudante de Ciência da Computação e desenvolvedor Java em formação. Gosto de entender como as coisas funcionam — e de transformar essa curiosidade em software.' : 'Computer Science student and Java developer in progress. I like understanding how things work — and turning that curiosity into software.'}</p>
-        <div className="home-cta-row animate-rise delay-2">
+        <p className="home-kicker animate-rise">{lang === 'pt' ? 'Olá, eu sou' : 'Hello, I am'}</p>
+        <h1 className="display-title home-title animate-rise delay-1">
+          <span className="name-interaction">Vinícius</span><br />
+          <em className="name-interaction">Bevilaqua.</em>
+        </h1>
+        <p className="home-role animate-rise delay-2">{lang === 'pt' ? 'Estudante de Ciência da Computação · Desenvolvedor Java' : 'Computer Science Student · Java Developer'}</p>
+        <p className="body-copy home-intro animate-rise delay-3">{lang === 'pt' ? 'Transformo curiosidade em software, explorando ideias e construindo soluções com propósito.' : 'I turn curiosity into software by exploring ideas and building purposeful solutions.'}</p>
+        <div className="home-cta-row animate-rise delay-4">
           <Link href="/projects" className="button-primary" data-testid="link-home-projects">{lang === 'pt' ? 'Explorar projetos' : 'Explore projects'} <ArrowUpRight size={15} /></Link>
           <Link href="/about" className="button-quiet" data-testid="link-home-about">{lang === 'pt' ? 'Conhecer o caminho' : 'See the journey'} <ArrowDownRight size={15} /></Link>
         </div>
@@ -287,13 +345,8 @@ function AboutPage({ lang }: { lang: Language }) {
             <p className="info-meta">2025 — 2028 · {lang === 'pt' ? '4º Semestre' : '4th Semester'}</p>
           </div>
           <div className="info-panel">
-            <span className="info-label">{lang === 'pt' ? 'Curso adicional' : 'Additional course'}</span>
-            <h2 className="info-title">Rocketseat</h2>
-            <p className="info-detail">{lang === 'pt' ? 'Fundamentos da Programação Web' : 'Web Programming Fundamentals'}</p>
-          </div>
-          <div className="info-panel">
             <span className="info-label">{lang === 'pt' ? 'Tecnologias & ferramentas' : 'Technologies & tools'}</span>
-            <div className="tools-cloud">{['Java', 'JavaScript', 'HTML', 'CSS', 'React Native', 'Expo', 'Node.js', 'Firebase', 'Git', 'GitHub', 'IntelliJ IDEA', 'VS Code'].map((tool) => <span className="tool" key={tool}>{tool}</span>)}</div>
+            <div className="tools-cloud">{['Java', 'JavaScript', 'HTML', 'CSS', 'React Native', 'Expo', 'Node.js', 'Firebase', 'Git', 'GitHub'].map((tool) => <span className="tool" key={tool}>{tool}</span>)}</div>
           </div>
         </aside>
       </div>
