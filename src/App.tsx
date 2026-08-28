@@ -16,13 +16,11 @@ import {
   ExternalLink,
   Linkedin,
   Mail,
-  Menu,
   Moon,
   Phone,
   Sun,
   Terminal,
   Workflow,
-  X,
 } from 'lucide-react';
 import {
   Link,
@@ -141,7 +139,6 @@ function Shell({
   setDark: (dark: boolean) => void;
 }) {
   const [location] = useLocation();
-  const [mobileOpen, setMobileOpen] = useState(false);
   const isProjects = location.startsWith('/projects');
   const links = [
     { href: '/', label: 'Home' },
@@ -181,18 +178,15 @@ function Shell({
             <button type="button" className="icon-btn" onClick={changeTheme} aria-label={dark ? 'Ativar tema claro' : 'Ativar tema escuro'} data-testid="button-theme">
               {dark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
-            <button type="button" className="menu-btn" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={mobileOpen} data-testid="button-mobile-menu">
-              {mobileOpen ? <X size={17} /> : <Menu size={17} />}
-            </button>
           </div>
         </div>
-        <div className={`mobile-panel ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
+        <nav className="mobile-panel" aria-label={navigateLabel}>
           {links.map((link) => (
-            <Link key={link.href} href={link.href} className="nav-link" onClick={() => setMobileOpen(false)} data-testid={`link-mobile-${link.label.toLowerCase()}`}>
+            <Link key={link.href} href={link.href} className={`nav-link ${(link.href === '/' ? location === '/' : link.href === '/projects' ? isProjects : location === link.href) ? 'active' : ''}`} aria-current={(link.href === '/' ? location === '/' : link.href === '/projects' ? isProjects : location === link.href) ? 'page' : undefined} data-testid={`link-mobile-${link.label.toLowerCase()}`}>
               {link.label}
             </Link>
           ))}
-        </div>
+        </nav>
       </header>
       <div className="route-transition" key={location}>
         {children}
