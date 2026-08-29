@@ -1,4 +1,4 @@
-# Vinícius Bevilaqua — Portfólio
+# Portfólio
 
 Portfólio pessoal de **Vinícius Bevilaqua**, estudante de Ciência da Computação e desenvolvedor Java.
 
